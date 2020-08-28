@@ -1,6 +1,6 @@
 # TheTop100
 
-## Alpha version
+## Versão alpha
 
 ### Funcionalidades
 
