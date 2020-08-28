@@ -9,6 +9,6 @@ class RetrofitConfig {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun gitHubService() = retrofit.create(GitHubService::class.java)
+    fun gitHubService(): GitHubService = retrofit.create(GitHubService::class.java)
 
 }
