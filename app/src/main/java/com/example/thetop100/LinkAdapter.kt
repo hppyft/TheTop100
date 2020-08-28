@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thetop100.databinding.LinkItemBinding
 
-class LinkAdapter(private val list: List<Pair<String, String>>) :
+class LinkAdapter(private val list: List<Repo>) :
     RecyclerView.Adapter<LinkAdapter.ViewHolder>() {
 
     class ViewHolder(val mBinding: LinkItemBinding) : RecyclerView.ViewHolder(mBinding.root)
@@ -19,6 +19,6 @@ class LinkAdapter(private val list: List<Pair<String, String>>) :
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mBinding.text = list[position].first
+        holder.mBinding.text = list[position].name
     }
 }
