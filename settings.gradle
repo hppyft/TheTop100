@@ -1,0 +1,2 @@
+rootProject.name='TheTop100'
+include ':app'
