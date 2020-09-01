@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thetop100.databinding.LinkItemBinding
 
 
-class LinkAdapter(private val context: Context,private val list: List<Repo>) :
-    RecyclerView.Adapter<LinkAdapter.ViewHolder>() {
+class LinkAdapter(private val context: Context, private var list: List<Repo>?) :
+    RecyclerView.Adapter<LinkAdapter.ViewHolder>(),AdapterItemsContract {
 
     class ViewHolder(val mBinding: LinkItemBinding) : RecyclerView.ViewHolder(mBinding.root)
 
@@ -20,10 +20,15 @@ class LinkAdapter(private val context: Context,private val list: List<Repo>) :
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun replaceItems(list: List<*>) {
+        this.list = list as List<Repo>
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = list?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = list[position]
+        val item = list!![position]
         holder.mBinding.repoName = "Repositório: ${item.name}"
         holder.mBinding.ownerName = "Autor: ${item.owner.login}"
         holder.mBinding.card.setOnClickListener {
