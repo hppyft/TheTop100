@@ -26,6 +26,7 @@ class RepoListView : Fragment() {
         this.lifecycle.addObserver(mViewModel)
         configList()
         configLoading()
+        configError()
         return mBinding.root
     }
 
@@ -42,15 +43,19 @@ class RepoListView : Fragment() {
             StaggeredGridLayoutManager.VERTICAL
         )
         mBinding.linksList.layoutManager = layoutManager
-        val linkAdapter = LinkAdapter(this@RepoListView.activity!!, mViewModel.repos.value)
+        val linkAdapter = LinkAdapter(this@RepoListView.activity!!, mViewModel.getRepos().value)
         mBinding.linksList.adapter = linkAdapter
-        mViewModel.repos.observe(this, Observer() {
-            linkAdapter.replaceItems(it)
+        mViewModel.getRepos().observe(this, Observer() {
+            if (it.isEmpty()) {
+                showError()
+            } else {
+                linkAdapter.replaceItems(it)
+            }
         })
     }
 
     private fun configLoading() {
-        mViewModel.loadingVisibility.observe(this, Observer() {
+        mViewModel.getLoadingVisibility().observe(this, Observer() {
             if (it) {
                 mBinding.linksList.visibility = View.GONE
                 mBinding.progress.visibility = View.VISIBLE
@@ -59,5 +64,27 @@ class RepoListView : Fragment() {
                 mBinding.progress.visibility = View.GONE
             }
         })
+    }
+
+    private fun configError() {
+        mViewModel.getError().observe(this, Observer() {
+            if (it) {
+                showError()
+            } else {
+                hideError()
+            }
+        })
+        mBinding.retryBtn.setOnClickListener {
+            mViewModel.onRetryClicked()
+        }
+    }
+
+    private fun showError() {
+        mBinding.linksList.visibility = View.GONE
+        mBinding.errorLayout.visibility = View.VISIBLE
+    }
+
+    private fun hideError() {
+        mBinding.errorLayout.visibility = View.GONE
     }
 }
