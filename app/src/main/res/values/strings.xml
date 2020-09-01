@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TheTop100</string>
+    <string name="retry_text">Tentar novamente</string>
+    <string name="error_text">Ocorreu um erro ao tentar resgatar a lista</string>
 </resources>
